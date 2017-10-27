@@ -25,7 +25,7 @@ public interface ItemsLayoutContainer {
 
     void setOnItemClickListener(OnItemClickListener listener);
 
-    View findViewById(@IdRes final int id);
+    <T extends View> T findViewById(@IdRes final int id);
 
     void removeAll();
 
