@@ -1,5 +1,6 @@
 package it.sephiroth.android.library.bottomnavigation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
@@ -42,7 +43,7 @@ public abstract class VerticalScrollingBehavior<V extends View>
   /*
      @return Overscroll direction: SCROLL_DIRECTION_UP, SCROLL_DIRECTION_DOWN, SCROLL_NONE
  */
-  @ScrollDirection public int getOverScrollDirection() {
+  @SuppressLint("WrongConstant") @ScrollDirection public int getOverScrollDirection() {
     return mOverScrollDirection;
   }
 
@@ -50,7 +51,7 @@ public abstract class VerticalScrollingBehavior<V extends View>
    * @return Scroll direction: SCROLL_DIRECTION_UP, SCROLL_DIRECTION_DOWN, SCROLL_NONE
    */
 
-  @ScrollDirection public int getScrollDirection() {
+  @SuppressLint("WrongConstant") @ScrollDirection public int getScrollDirection() {
     return mScrollDirection;
   }
 
@@ -70,28 +71,29 @@ public abstract class VerticalScrollingBehavior<V extends View>
 
   @Override
   public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
-      View directTargetChild, View target, int nestedScrollAxes) {
+      @NonNull View directTargetChild, @NonNull View target, int nestedScrollAxes, int type) {
     return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
   }
 
   @Override
   public void onNestedScrollAccepted(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
-      @NonNull View directTargetChild, @NonNull View target, int nestedScrollAxes) {
+      @NonNull View directTargetChild, @NonNull View target, int nestedScrollAxes, int type) {
     super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target,
-        nestedScrollAxes);
+        nestedScrollAxes, type);
   }
 
   @Override
   public void onStopNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
-      @NonNull View target) {
-    super.onStopNestedScroll(coordinatorLayout, child, target);
+      @NonNull View target, int type) {
+    super.onStopNestedScroll(coordinatorLayout, child, target, type);
   }
 
   @Override
   public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
-      @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+      @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed,
+      int type) {
     super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-        dyUnconsumed);
+        dyUnconsumed, type);
     if (dyUnconsumed > 0 && mTotalDyUnconsumed < 0) {
       mTotalDyUnconsumed = 0;
       mOverScrollDirection = ScrollDirection.SCROLL_DIRECTION_UP;
@@ -106,8 +108,8 @@ public abstract class VerticalScrollingBehavior<V extends View>
 
   @Override
   public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull V child,
-      @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
-    super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
+      @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
+    super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
     if (dy > 0 && mTotalDy < 0) {
       mTotalDy = 0;
       mScrollDirection = ScrollDirection.SCROLL_DIRECTION_UP;
