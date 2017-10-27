@@ -486,8 +486,6 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
     protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         log(TAG, INFO, "onSizeChanged(%d, %d)", w, h);
         super.onSizeChanged(w, h, oldw, oldh);
-        MarginLayoutParams marginLayoutParams = (MarginLayoutParams) getLayoutParams();
-        marginLayoutParams.bottomMargin = -bottomInset;
     }
 
     public boolean isAttachedToWindow() {
