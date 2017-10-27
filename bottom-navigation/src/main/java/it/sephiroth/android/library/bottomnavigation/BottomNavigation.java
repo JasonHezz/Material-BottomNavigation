@@ -415,6 +415,13 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
         }
     }
 
+    public View getMenuItemView(@IdRes int id){
+        if(null != itemsContainer){
+            return itemsContainer.findViewById(id);
+        }
+        return null;
+    }
+
     public boolean getMenuItemEnabled(final int index) {
         if (null != menu) {
             return menu.getItemAt(index).isEnabled();
